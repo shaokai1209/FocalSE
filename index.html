@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FocalSE Audio Demo | Noisy Speech Codec Enhancement</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f5fa 0%, #e6edf5 100%);
+            padding: 30px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 40px;
+            padding: 30px 25px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 25px 40px -15px rgba(0, 40, 80, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e2f5a, #2b4b8f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+
+        .header .badge {
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px 25px;
+            border-radius: 60px;
+            display: inline-block;
+            font-size: 16px;
+            color: #1e2f5a;
+            font-weight: 500;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.03);
+            border: 1px solid rgba(255,255,255,0.8);
+            margin-top: 8px;
+        }
+
+        .bps-section {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            border-radius: 40px;
+            padding: 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 15px 30px -10px rgba(0, 30, 60, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+        }
+
+        .bps-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #4a90e2, #a58bf5, #f2a0c0) 1;
+            border-bottom-style: solid;
+            border-bottom-width: 3px;
+            border-image-slice: 1;
+            color: #1a2b4a;
+        }
+
+        .bps-title::before {
+            content: "🎤";
+            font-size: 32px;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1));
+        }
+
+        .sample-group {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 28px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px -5px rgba(0, 20, 40, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .sample-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e2f5a;
+            margin-bottom: 20px;
+            padding-left: 18px;
+            position: relative;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .sample-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 6px;
+            background: linear-gradient(180deg, #4a90e2, #a58bf5);
+            border-radius: 6px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-bottom: 10px;
+        }
+
+        .compare-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            border-radius: 20px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 6px 14px rgba(0, 20, 40, 0.05);
+        }
+
+        .compare-table th {
+            background: #2b4b8f;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 14px 10px;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .compare-table th:first-child {
+            width: 14%;
+        }
+        .compare-table th:not(:first-child) {
+            width: 21.5%;
+        }
+
+        .compare-table td {
+            padding: 12px 8px;
+            text-align: center;
+            border-bottom: 1px solid #e9edf2;
+            font-size: 15px;
+            background: white;
+            vertical-align: middle;
+        }
+
+        .compare-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .compare-table tr:hover td {
+            background: #f5f9ff;
+        }
+
+        .method-name {
+            font-weight: 700;
+            color: #1e2f5a;
+            letter-spacing: 0.3px;
+        }
+        .method-name.proposed {
+            color: #2b4b8f;
+            background: linear-gradient(135deg, #eef3ff, #f0f5ff);
+        }
+
+        audio {
+            width: 100%;
+            max-width: 200px;
+            height: 32px;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 700px) {
+            .bps-section { padding: 20px; }
+            .compare-table th, .compare-table td { font-size: 13px; }
+            audio { max-width: 150px; height: 28px; }
+        }
+
+        .footer-note {
+            text-align: center;
+            margin: 30px 0 10px;
+            color: #4a5568;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Noisy Environment Adaptation of Neural Speech Codec <br>via Focal Mask and Noise Feature Separation</h1>
+            <p>🎧 Audio Demo – Enhancement under different SNRs at 2500 bps and 6000 bps</p>
+            <div class="badge">
+                <strong>FocalSE (Proposed)</strong> &nbsp;|&nbsp; FDCBR &nbsp;|&nbsp; SECE &nbsp;|&nbsp; DAC (baseline)
+            </div>
+        </div>
+
+        <!-- 2500 bps 区块 -->
+        <div class="bps-section">
+            <div class="bps-title">2500 bps</div>
+
+            <!-- 句子 1 -->
+            <div class="sample-group">
+                <div class="sample-title">Sample 1: “Also, a popular contrivance whereby love-making may be suspended but not stopped during the picnic season.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample1-2500"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 句子 2 -->
+            <div class="sample-group">
+                <div class="sample-title">Sample 2: “Desperately immortal, she; She stands With wide hands Dim through the veil of eternity, Behind the supreme door.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample2-2500"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 句子 3 -->
+            <div class="sample-group">
+                <div class="sample-title">Sample 3: “Go to her.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample3-2500"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6000 bps 区块 -->
+        <div class="bps-section">
+            <div class="bps-title">6000 bps</div>
+
+            <div class="sample-group">
+                <div class="sample-title">Sample 1: “Also, a popular contrivance whereby love-making may be suspended but not stopped during the picnic season.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample1-6000"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sample-group">
+                <div class="sample-title">Sample 2: “Desperately immortal, she; She stands With wide hands Dim through the veil of eternity, Behind the supreme door.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample2-6000"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="sample-group">
+                <div class="sample-title">Sample 3: “Go to her.”</div>
+                <div class="table-wrapper">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>SNR = -5 dB</th>
+                                <th>SNR = 0 dB</th>
+                                <th>SNR = 5 dB</th>
+                                <th>SNR = 10 dB</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sample3-6000"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            ⚡ FocalSE · Noisy Speech Codec Enhancement · Interspeech 2026
+        </div>
+    </div>
+
+    <script>
+        // ---------- 音频互相暂停控制 ----------
+        document.addEventListener('play', function(e) {
+            const audios = document.getElementsByTagName('audio');
+            for (let audio of audios) {
+                if (audio !== e.target) {
+                    audio.pause();
+                }
+            }
+        }, true);
+
+        // ---------- 动态生成表格内容 ----------
+        const baseUrl = 'https://raw.githubusercontent.com/shaokai1209/FocalSE/main/samples/';
+
+        // 句子对应的文件前缀
+        const samples = {
+            sample1: '121_121726_000004_000003',
+            sample2: '8555_292519_000048_000000',
+            sample3: '61_70970_000007_000001'
+        };
+
+        // SNR 列表
+        const snrs = ['-5', '0', '5', '10'];
+
+        // 生成音频标签
+        function audioTag(src) {
+            return `<audio controls src="${src}" preload="none"></audio>`;
+        }
+
+        // 填充表格的函数
+        function fillTable(tbodyId, prefix, bitrate) {
+            const tbody = document.getElementById(tbodyId);
+            const cleanFile = `${prefix}.wav`;
+            const cleanUrl = baseUrl + cleanFile;
+
+            // 方法定义：名称、是否增强、后缀模式
+            const methods = [
+                { name: 'GroundTruth', type: 'clean' },
+                { name: 'Noisy', type: 'noisy' },
+                { name: 'DAC', type: 'baseline' },
+                { name: 'FDCBR', type: 'enhanced' },
+                { name: 'SECE', type: 'enhanced' },
+                { name: 'FocalSE (Proposed)', type: 'focalse' }
+            ];
+
+            let rows = '';
+            methods.forEach(method => {
+                rows += '<tr>';
+                rows += `<td class="method-name${method.type === 'focalse' ? ' proposed' : ''}">${method.name}</td>`;
+
+                snrs.forEach(snr => {
+                    let fileUrl;
+                    if (method.type === 'clean') {
+                        // 干净语音对于所有 SNR 都一样
+                        fileUrl = cleanUrl;
+                    } else if (method.type === 'noisy') {
+                        // 带噪语音：prefix_snrX.wav
+                        fileUrl = baseUrl + `${prefix}_snr${snr}.wav`;
+                    } else if (method.type === 'baseline') {
+                        // DAC: prefix_snrX_dac_XXXXbps.wav
+                        fileUrl = baseUrl + `${prefix}_snr${snr}_dac_${bitrate}bps.wav`;
+                    } else if (method.type === 'enhanced') {
+                        // FDCBR / SECE: prefix_snrX_enhanced_METHOD_XXXXbps.wav
+                        const methodCode = method.name; // FDCBR or SECE
+                        fileUrl = baseUrl + `${prefix}_snr${snr}_enhanced_${methodCode}_${bitrate}bps.wav`;
+                    } else if (method.type === 'focalse') {
+                        // FocalSE: prefix_snrX_enhanced_FocalSE_XXXXbps.wav
+                        fileUrl = baseUrl + `${prefix}_snr${snr}_enhanced_FocalSE_${bitrate}bps.wav`;
+                    }
+                    rows += `<td>${audioTag(fileUrl)}</td>`;
+                });
+                rows += '</tr>';
+            });
+
+            tbody.innerHTML = rows;
+        }
+
+        // 填充所有表格
+        fillTable('sample1-2500', samples.sample1, '2500');
+        fillTable('sample2-2500', samples.sample2, '2500');
+        fillTable('sample3-2500', samples.sample3, '2500');
+        fillTable('sample1-6000', samples.sample1, '6000');
+        fillTable('sample2-6000', samples.sample2, '6000');
+        fillTable('sample3-6000', samples.sample3, '6000');
+    </script>
+</body>
+</html>
