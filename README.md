@@ -14,7 +14,7 @@ Select your target codec below for detailed training instructions:
 <!-- WavTokenizer 板块 -->
 <!-- ============================================================ -->
 <details>
-<summary><b>WavTokenizer</b> — 40/75 tokens/s discrete codec</summary>
+<summary><b>WavTokenizer——wNEAF</b> — single-stage VQ speech codec</summary>
 
 ### WavTokenizer Noise-Robust Adaptation Training Guide
 
@@ -101,7 +101,7 @@ Trained model checkpoints and training logs will be saved to the `save_dir` spec
 <!-- DAC 板块（模板，后续填充） -->
 <!-- ============================================================ -->
 <details>
-<summary><b>DAC</b> — High-fidelity neural audio codec</summary>
+<summary><b>DAC_wNEAF</b> — High-fidelity neural audio codec</summary>
 
 ### DAC Noise-Robust Adaptation Training Guide
 
@@ -113,7 +113,7 @@ Trained model checkpoints and training logs will be saved to the `save_dir` spec
 <!-- HiFiCodec 板块（模板，后续填充） -->
 <!-- ============================================================ -->
 <details>
-<summary><b>HiFiCodec</b> — High-fidelity neural speech codec</summary>
+<summary><b>HiFiCodec_wNEAF</b> — High-fidelity neural speech codec</summary>
 
 ### HiFiCodec Noise-Robust Adaptation Training Guide
 
