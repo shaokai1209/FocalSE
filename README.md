@@ -6,7 +6,7 @@
 :stuck_out_tongue_winking_eye: The code will be made publicly available after the extended version of the work is published.
 
 
-## 🚀 Training Guides by Codec
+## 🚀 Training Guides
 
 Select your target codec below for detailed training instructions:
 
