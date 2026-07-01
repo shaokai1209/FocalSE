@@ -1,0 +1,99 @@
+seed_everything: 3407
+
+data:
+  class_path: decoder.dataset_noisy.NoisyVocosDataModule
+  init_args:
+    train_params:
+      filelist_path: /home/shaokai/seCodec251209/train_clean_24khz.lst
+      sampling_rate: 24000
+      num_samples: 72000
+      batch_size: 8 
+      num_workers: 6
+    val_params:
+      filelist_path: /home/shaokai/seCodec251209/dev_clean_24khz.lst
+      sampling_rate: 24000
+      num_samples: 72000
+      batch_size: 6
+      num_workers: 6
+    noise_filelist: /home/shaokai/seCodec251209/noisy_train_24khz.lst   # 24kHz ESC50
+
+model:
+  class_path: decoder.experiment_focalse.WavTokenizer_FocalSE
+  init_args:
+    sample_rate: 24000
+    initial_learning_rate: 2e-4
+    mel_loss_coeff: 45
+    mrd_loss_coeff: 1.0
+    num_warmup_steps: 0
+    pretrain_mel_steps: 0
+    decay_mel_coeff: false
+    evaluate_utmos: false
+    evaluate_pesq: false
+    evaluate_periodicty: false
+
+    resume: true
+    resume_config: /home/shaokai/WavTokenizer-github0611/configs/wavtokenizer_smalldata_frame75_3s_nq1_code4096_dim512_kmeans200_attn.yaml
+    resume_model: /home/shaokai/WavTokenizer-github0611/model_save/24khz_900bps/lightning_logs/version_1/checkpoints/wavtokenizer_checkpoint_epoch=54_step=546370_val_loss=4.6170.ckpt
+    noise_classes: 50
+    noise_cls_dropout: 0.1
+    focal_loss_coeff: 5.0
+    noise_ce_coeff: 1.0
+    sem_loss_coeff: 5.0
+
+    feature_extractor:
+      class_path: decoder.feature_extractors_focalse.EncodecFeaturesWithFocalSE
+      init_args:
+        encodec_model: encodec_24khz
+        bandwidths: [6.6, 6.6, 6.6, 6.6]
+        train_codebooks: true
+        num_quantizers: 1
+        dowmsamples: [8, 5, 4, 2]
+        vq_bins: 4096
+        vq_kmeans: 200
+        focal_input_dim: 512
+        focal_hidden_dim: 256
+        focal_num_layers: 4
+        focal_heads: 8
+        focal_dropout: 0.1
+
+    backbone:
+      class_path: decoder.models.VocosBackbone
+      init_args:
+        input_channels: 512
+        dim: 768
+        intermediate_dim: 2304
+        num_layers: 12
+        adanorm_num_embeddings: 4
+
+    head:
+      class_path: decoder.heads.ISTFTHead
+      init_args:
+        dim: 768
+        n_fft: 1280
+        hop_length: 320
+        padding: same
+
+trainer:
+  logger:
+    class_path: pytorch_lightning.loggers.TensorBoardLogger
+    init_args:
+      save_dir: /home/shaokai/WavTokenizer-github0611/model_save/24khz_900bps_focalse
+  callbacks:
+    - class_path: pytorch_lightning.callbacks.LearningRateMonitor
+    - class_path: pytorch_lightning.callbacks.ModelSummary
+      init_args:
+        max_depth: 2
+    - class_path: pytorch_lightning.callbacks.ModelCheckpoint
+      init_args:
+        monitor: val_loss
+        filename: wavtokenizer_focalse_{epoch}_{step}_{val_loss:.4f}
+        save_top_k: 10
+        save_last: true
+    - class_path: decoder.helpers.GradNormCallback
+
+  max_steps: 500000
+  limit_val_batches: 50
+  accelerator: gpu
+  strategy: ddp_find_unused_parameters_true
+  devices: [3,4,5,6]
+  log_every_n_steps: 500
