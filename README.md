@@ -14,7 +14,7 @@ Select your target codec below for detailed training instructions:
 <!-- WavTokenizer 板块 -->
 <!-- ============================================================ -->
 <details>
-<summary><b>WavTokenizer_wNEAF</b> — single-stage VQ speech codec</summary>
+<summary><b>WavTokenizer_wNEAF</b> — Single-stage VQ speech codec</summary>
 
 ### WavTokenizer Noise-Robust Adaptation Training Guide
 
