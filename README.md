@@ -6,16 +6,21 @@
 :stuck_out_tongue_winking_eye: The code will be made publicly available after the extended version of the work is published.
 
 
-# WavTokenizer Noise-Robust Adaptation Training Guide
+## 🚀 Training Guides by Codec
+
+Select your target codec below for detailed training instructions:
+
+<!-- ============================================================ -->
+<!-- WavTokenizer 板块 -->
+<!-- ============================================================ -->
+<details>
+<summary><b>WavTokenizer</b> — 40/75 tokens/s discrete codec</summary>
+
+### WavTokenizer Noise-Robust Adaptation Training Guide
 
 This repository contains the noise-robust adaptation source code for WavTokenizer, located in the `wavtokenizer_wNEAF` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
 
-> ⚠️ **Important Notice**
-> All file paths containing `shaokai` in configuration files **must be replaced with your local absolute paths** before running any training commands.
-
----
-
-## Stage 1: Clean Pre-training Stage
+#### Stage 1: Clean Pre-training Stage
 
 This stage trains the baseline WavTokenizer model on a clean speech dataset, with the runtime environment fully aligned with the official WavTokenizer release.
 
@@ -45,9 +50,7 @@ This stage trains the baseline WavTokenizer model on a clean speech dataset, wit
     python train.py fit --config your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_24khz_900bps.yaml
     ```
 
----
-
-## Stage 2: Noisy Adaptation Stage
+#### Stage 2: Noisy Adaptation Stage
 
 This stage fine-tunes the Focal-SE denoising module based on the pre-trained weights from Stage 1, to improve the model's encoding and reconstruction quality under noisy environments.
 
@@ -88,8 +91,32 @@ This stage fine-tunes the Focal-SE denoising module based on the pre-trained wei
     python train.py fit --config your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_focalse.yaml
     ```
 
----
-
-## Training Output
+#### Training Output
 
 Trained model checkpoints and training logs will be saved to the `save_dir` specified in the corresponding configuration file.
+
+</details>
+
+<!-- ============================================================ -->
+<!-- DAC 板块（模板，后续填充） -->
+<!-- ============================================================ -->
+<details>
+<summary><b>DAC</b> — High-fidelity neural audio codec</summary>
+
+### DAC Noise-Robust Adaptation Training Guide
+
+*To be updated.*
+
+</details>
+
+<!-- ============================================================ -->
+<!-- HiFiCodec 板块（模板，后续填充） -->
+<!-- ============================================================ -->
+<details>
+<summary><b>HiFiCodec</b> — High-fidelity neural speech codec</summary>
+
+### HiFiCodec Noise-Robust Adaptation Training Guide
+
+*To be updated.*
+
+</details>
