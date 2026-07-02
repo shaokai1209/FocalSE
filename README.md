@@ -185,7 +185,61 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 
 ### HiFiCodec Noise-Robust Adaptation Training Guide
 
-*To be updated.*
+This repository contains the noise-robust adaptation source code for HiFiCodec, located in the `AcademiCodec-master` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
+
+#### Environment Setup
+
+Navigate to the project directory and set up the runtime environment:
+
+```bash
+cd NoiseRobustVRVQ-main
+```
+
+Full environment dependency setup:
+
+| Item                 | Command / Details                                                                                                          |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------|
+| **Python**           | 3.12                                                                                                                       |
+| **Create Conda env** | `conda create -n neaf_nsc python=3.12`                                                                                     |
+| **Activate env**     | `conda activate neaf_nsc`                                                                                                  |
+| **PyTorch**          | `conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=12.1 -c pytorch -c nvidia`                |
+| **Mamba-SSM**        | `pip install mamba-ssm==1.2.0.post1 --no-build-isolation`                                                                 |
+| **Other dependencies** | `pip install -r requirements.txt`                                                                                        |
+
+#### Stage 1: Clean Pre-training Stage
+
+This stage trains the HiFiCodec model on a clean speech dataset.
+
+1. Modify the training configuration
+```bash
+cd ..
+cd AcademiCodec-master/egs/HiFi-Codec-16k-320d
+```
+    - Configuration file path: `./AcademiCodec-master/egs/HiFi-Codec-16k-320d/config_16k_320d.json`
+    - Replace all paths containing `shaokai` with your local absolute paths
+    - Adjust `start.sh` dataset paths, save directory, and other training parameters according to your needs
+
+2. Start pre-training
+
+    ```bash 
+    bash start.sh
+    ```
+
+#### Stage 2: Noisy Adaptation Stage
+
+This stage fine-tunes the NEAF denoising method based on the pre-trained HiFiCodec weights from Stage 1, to improve the model's encoding and reconstruction quality under noisy environments.
+
+1. Modify the adaptation training configuration
+
+    - Replace all paths containing `shaokai` with your local absolute paths
+    - Fill in the pre-trained weight path generated in Stage 1
+    - Adjust 'start_focalse.sh' denoising training parameters according to your needs
+
+2. Start noisy adaptation training
+
+    ```bash
+    bash start_focalse.sh
+    ```
 
 </details>
 
