@@ -137,6 +137,7 @@ This stage trains the DAC model on a clean speech dataset.
 1. Modify the training configuration
 
     - Configuration file path: `./conf/stage1_clean_recon/CBR_16k.yml`
+    - Replace all paths containing `shaokai` with your local absolute paths
     - Adjust dataset paths, save directory, and other training parameters according to your needs
 
 2. Start pre-training
@@ -156,6 +157,7 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 1. Modify the adaptation training configuration
 
     - Configuration file path: `./conf/stage2_denoising/CBR_focalSE.yml`
+    - Replace all paths containing `shaokai` with your local absolute paths
     - Fill in the pre-trained weight path generated in Stage 1
     - Adjust denoising training parameters according to your needs
 
