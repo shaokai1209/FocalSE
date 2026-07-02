@@ -1,0 +1,43 @@
+## Sampling rate
+DAC_VRVQ_FeatureDenoise.sample_rate: 16000
+Discriminator.sample_rate: 16000
+
+# Data
+batch_size: 16
+# train/AudioDataset_EARS_Paired.duration: 0.38
+train/AudioDataset_EARS_DynamicNoisy.duration: 1.14  
+train/AudioDataset_EARS_DynamicNoisy.n_examples: 10000000 
+
+val_batch_size: 4
+val/AudioDataset_EARS_DynamicNoisy.duration: 3.0  
+val/AudioDataset_EARS_DynamicNoisy.n_examples: 32 
+
+AudioLoader_EARS_DynamicNoisy.shuffle: true 
+AudioDataset_EARS_DynamicNoisy.without_replacement: true  
+
+train/AudioLoader_EARS_DynamicNoisy.snr_list: "-10,-5,0,5,10,15,20"
+val/AudioLoader_EARS_DynamicNoisy.snr_list: "-10,-5,0,5,10,15,20"
+
+train/build_dataset.folders:
+        clean:
+                - /home/shaokai/seCodec251209/train_clean.lst
+        noisy:
+                - /home/shaokai/seCodec251209/noisy_train.lst  # ESC50
+
+val/build_dataset.folders:
+        clean:
+                - /home/shaokai/seCodec251209/dev_clean.lst
+        noisy:
+                - /home/shaokai/seCodec251209/noisy_train.lst  # ESC50
+
+test/build_loader.folders:
+        clean:
+                - /home/shaokai/seCodec251209/test-clean_16khz.lst
+        noisy:
+                - /home/shaokai/seCodec251209/test_noisy_snr/16khz/snr_-10
+
+test_mamba/build_loader.folders:
+        clean:
+                - /home/shaokai/seCodec251209/test-clean_16khz.lst
+        est_mamba:
+                - /home/shaokai/seCodec251209/test_noisy_snr/16khz/snr_-10

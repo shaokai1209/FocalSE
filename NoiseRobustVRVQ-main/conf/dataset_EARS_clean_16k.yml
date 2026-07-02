@@ -1,0 +1,29 @@
+## Sampling rate
+DAC_VRVQ.sample_rate: 16000
+Discriminator.sample_rate: 16000
+
+# Data
+batch_size: 32
+train/AudioDataset_EARS_Clean.duration: 1.14
+train/AudioDataset_EARS_Clean.n_examples: 10000000
+
+val_batch_size: 4
+val/AudioDataset_EARS_Clean.duration: 3.0
+val/AudioDataset_EARS_Clean.n_examples: 32
+
+AudioLoader_EARS_Clean.shuffle: true
+AudioDataset_EARS_Clean.without_replacement: true
+
+train/build_dataset.folders:
+  clean:
+    - /home/shaokai/seCodec251209/train_clean.lst
+
+
+val/build_dataset.folders:
+  clean:
+    - /home/shaokai/seCodec251209/dev_clean.lst
+
+
+test/build_loader.folders:
+  clean:
+    - /home/shaokai/seCodec251209/test-clean_16khz.lst

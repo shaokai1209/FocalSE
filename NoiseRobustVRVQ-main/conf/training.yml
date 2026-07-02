@@ -1,0 +1,12 @@
+# $include:
+#   - conf/base.yml
+
+
+# batch_size: 8
+# val_batch_size: 8
+num_workers: 8
+
+num_iters: 200000
+save_iters: []
+valid_freq: 10000
+sample_freq: 10000
