@@ -1,4 +1,4 @@
-# A General Noisy Environment Adaptation Framework (NEAF) for NSCs
+# A General Noisy Environment Adaptation Framework (NEAF) for Neural Speech Codecs (NSCs)
 
 ## 📢 News
 
