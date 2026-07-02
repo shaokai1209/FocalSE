@@ -188,7 +188,7 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 
 </details>
 
-#### Acknowledgments
+## Acknowledgments
 
 We thank the authors for their excellent works:
 
