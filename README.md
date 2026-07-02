@@ -17,7 +17,7 @@ Select your target codec below for detailed training instructions:
 <details>
 <summary><b>WavTokenizer_wNEAF</b> — Single-stage VQ speech codec</summary>
 
-### WavTokenizer Noise-Robust Adaptation Training Guide
+#### WavTokenizer Noise-Robust Adaptation Training Guide
 
 This repository contains the noise-robust adaptation source code for WavTokenizer, located in the `wavtokenizer_wNEAF` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
 
@@ -108,7 +108,7 @@ Trained model checkpoints and training logs will be saved to the `save_dir` spec
 <details>
 <summary><b>DAC_wNEAF</b> — High-fidelity neural audio codec</summary>
 
-### DAC Noise-Robust Adaptation Training Guide
+#### DAC Noise-Robust Adaptation Training Guide
 
 This repository contains the noise-robust adaptation source code for DAC, located in the `NoiseRobustVRVQ-main` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
 
@@ -183,7 +183,7 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 <details>
 <summary><b>HiFiCodec_wNEAF</b> — High-fidelity neural speech codec</summary>
 
-### HiFiCodec Noise-Robust Adaptation Training Guide
+#### HiFiCodec Noise-Robust Adaptation Training Guide
 
 This repository contains the noise-robust adaptation source code for HiFiCodec, located in the `AcademiCodec-master` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
 
