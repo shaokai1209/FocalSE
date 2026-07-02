@@ -192,7 +192,6 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 
 We thank the authors for their excellent works:
 
-```
 [1] Kumar R, Seetharaman P, Luebs A, et al. High-fidelity audio compression with improved rvqgan[J].
     Advances in Neural Information Processing Systems, 2023, 36: 27980-27993.
     [Code](https://github.com/descriptinc/descript-audio-codec)
@@ -212,5 +211,4 @@ We thank the authors for their excellent works:
 [5] Della Libera L, Paissan F, Subakan C, et al. FocalCodec: Low-bitrate speech coding via focal modulation
     networks[J]. Advances in Neural Information Processing Systems, 2026, 38: 23742-23767.
     [Code](https://github.com/lucadellalib/focalcodec)
-```
 
