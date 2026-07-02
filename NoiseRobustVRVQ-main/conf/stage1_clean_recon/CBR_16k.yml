@@ -1,0 +1,12 @@
+$include:
+  - conf/base_clean.yml
+  - conf/training.yml
+  - conf/dataset_EARS_clean_16k.yml
+
+DAC_VRVQ.model_type: "CBR"
+
+# Quantization
+DAC_VRVQ.n_codebooks: 2
+DAC_VRVQ.codebook_size: 1024
+DAC_VRVQ.codebook_dim: 8
+DAC_VRVQ.quantizer_dropout: 0.5
