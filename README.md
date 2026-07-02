@@ -102,19 +102,80 @@ Trained model checkpoints and training logs will be saved to the `save_dir` spec
 </details>
 
 <!-- ============================================================ -->
-<!-- DAC 板块（模板，后续填充） -->
+<!-- DAC 板块 -->
 <!-- ============================================================ -->
 <details>
 <summary><b>DAC_wNEAF</b> — High-fidelity neural audio codec</summary>
 
 ### DAC Noise-Robust Adaptation Training Guide
 
-*To be updated.*
+This repository contains the noise-robust adaptation source code for DAC, located in the `NoiseRobustVRVQ-main` directory. The training pipeline follows a two-stage workflow: clean speech pre-training, followed by noisy scenario adaptation.
+
+#### Environment Setup
+
+Navigate to the project directory and set up the runtime environment:
+
+```bash
+cd NoiseRobustVRVQ-main
+```
+
+Full environment dependency setup:
+
+| Item                 | Command / Details                                                                                                          |
+|----------------------|----------------------------------------------------------------------------------------------------------------------------|
+| **Python**           | 3.12                                                                                                                       |
+| **Create Conda env** | `conda create -n neaf_nsc python=3.12`                                                                                     |
+| **Activate env**     | `conda activate neaf_nsc`                                                                                                  |
+| **PyTorch**          | `conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=12.1 -c pytorch -c nvidia`                |
+| **Mamba-SSM**        | `pip install mamba-ssm==1.2.0.post1 --no-build-isolation`                                                                 |
+| **Other dependencies** | `pip install -r requirements.txt`                                                                                        |
+
+#### Stage 1: Clean Pre-training Stage
+
+This stage trains the DAC model on a clean speech dataset.
+
+1. Modify the training configuration
+
+    - Configuration file path: `./conf/stage1_clean_recon/CBR_16k.yml`
+    - Adjust dataset paths, save directory, and other training parameters according to your needs
+
+2. Start pre-training
+
+    ```bash
+    CUDA_VISIBLE_DEVICES=5 taskset -c 24-39 python ./scripts/stage1_train_clean.py \
+        --args.load ./conf/stage1_clean_recon/CBR_16k.yml \
+        --save_path ./stage1/CBR_16k_625bps \
+        --batch_size 16 \
+        --val_batch_size 4
+    ```
+
+#### Stage 2: Noisy Adaptation Stage
+
+This stage fine-tunes the NEAF denoising method based on the pre-trained DAC weights from Stage 1, to improve the model's encoding and reconstruction quality under noisy environments.
+
+1. Modify the adaptation training configuration
+
+    - Configuration file path: `./conf/stage2_denoising/CBR_focalSE.yml`
+    - Fill in the pre-trained weight path generated in Stage 1
+    - Adjust denoising training parameters according to your needs
+
+2. Start noisy adaptation training
+
+    ```bash
+    CUDA_VISIBLE_DEVICES=6,7 taskset -c 24-39 torchrun \
+        --nproc_per_node=2 \
+        --master_port=38650 \
+        ./scripts/stage2_train_NANSC.py \
+        --args.load ./conf/stage2_denoising/CBR_focalSE.yml \
+        --save_path ./stage2/CBR_feat_denoise_16k \
+        --batch_size 24 \
+        --val_batch_size 4
+    ```
 
 </details>
 
 <!-- ============================================================ -->
-<!-- HiFiCodec 板块（模板，后续填充） -->
+<!-- HiFiCodec 板块 -->
 <!-- ============================================================ -->
 <details>
 <summary><b>HiFiCodec_wNEAF</b> — High-fidelity neural speech codec</summary>
