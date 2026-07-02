@@ -1,7 +1,10 @@
 # Noisy Environment Adaptation Framework for NSCs
-### :wave: Hi, we’d like to invite you to listen to our <a href='https://shaokai1209.github.io/FocalSE/' target='_blank' style='text-decoration: none;'><img src='https://img.shields.io/badge/🎧_Audio_Demo-1DB954?style=flat' alt='Audio Demo' style='border-radius: 14px; padding: 8px 16px; background-color: #1DB954;'></a>.
 
-- Our paper "Noisy Environment Adaptation of Neural Speech Codec via Focal Mask and Noise Feature Separation" has been **accepted** for **INTERSPEECH 2026** (June 4, 2026).
+## 📢 News
+
+[May 4, 2026] - :wave: Hi, we’d like to invite you to listen to our <a href='https://shaokai1209.github.io/FocalSE/' target='_blank' style='text-decoration: none;'><img src='https://img.shields.io/badge/🎧_Audio_Demo-1DB954?style=flat' alt='Audio Demo' style='border-radius: 14px; padding: 8px 16px; background-color: #1DB954;'></a>.
+
+[June 4, 2026] - Our paper "Noisy Environment Adaptation of Neural Speech Codec via Focal Mask and Noise Feature Separation" has been **accepted** for **INTERSPEECH 2026**.
 
 :stuck_out_tongue_winking_eye: The code will be made publicly available after the extended version of the work is published.
 
@@ -188,7 +191,7 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained DAC wei
 
 </details>
 
-## Acknowledgments
+## 🔮 Acknowledgments
 
 We thank the authors for their excellent works:
 
