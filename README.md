@@ -194,21 +194,21 @@ We thank the authors for their excellent works:
 
 [1] Kumar R, Seetharaman P, Luebs A, et al. High-fidelity audio compression with improved rvqgan[J].
     Advances in Neural Information Processing Systems, 2023, 36: 27980-27993.
-    [Code](https://github.com/descriptinc/descript-audio-codec)
+    [DAC Code](https://github.com/descriptinc/descript-audio-codec)
 
 [2] Yang D, Liu S, Huang R, et al. Hifi-codec: Group-residual vector quantization for high fidelity audio
     codec[J]. arXiv preprint arXiv:2305.02765, 2023.
-    [Code](https://github.com/yangdongchao/AcademiCodec)
+    [HiFiCodec Code](https://github.com/yangdongchao/AcademiCodec)
 
 [3] Chae Y, Lee K. Towards Bitrate-Efficient and Noise-Robust Speech Coding with Variable Bitrate RVQ[C]//
     Proc. Interspeech 2025. 2025: 609-613.
-    [Code](https://github.com/yoongi43/NoiseRobustVRVQ)
+    [FDCBR Code](https://github.com/yoongi43/NoiseRobustVRVQ)
 
 [4] Ji S, Jiang Z, Wang W, et al. Wavtokenizer: an efficient acoustic discrete codec tokenizer for audio
     language modeling[C]//International Conference on Learning Representations. 2025, 2025: 93809-93826.
-    [Code](https://github.com/jishengpeng/WavTokenizer)
+    [WavTokenizer Code](https://github.com/jishengpeng/WavTokenizer)
 
 [5] Della Libera L, Paissan F, Subakan C, et al. FocalCodec: Low-bitrate speech coding via focal modulation
     networks[J]. Advances in Neural Information Processing Systems, 2026, 38: 23742-23767.
-    [Code](https://github.com/lucadellalib/focalcodec)
+    [FocalCodec Code](https://github.com/lucadellalib/focalcodec)
 
