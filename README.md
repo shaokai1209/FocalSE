@@ -65,6 +65,9 @@ This stage fine-tunes the Focal-SE denoising module based on the pre-trained wei
     ```
 
 3. Full environment dependency setup
+    ```bash
+    cd NoiseRobustVRVQ-main
+    ```
     | Item                 | Command / Details                                                                                                          |
     |----------------------|----------------------------------------------------------------------------------------------------------------------------|
     | **Python**           | 3.12                                                                                                                       |
@@ -74,19 +77,20 @@ This stage fine-tunes the Focal-SE denoising module based on the pre-trained wei
     | **Mamba-SSM**        | `pip install mamba-ssm==1.2.0.post1 --no-build-isolation`                                                               |
     | **Other dependencies** | `pip install -r requirements.txt`                                                                                        |
 
-4. Activate the environment and navigate to the source directory
+5. Activate the environment and navigate to the source directory
     ```bash
     conda activate neaf_nsc
+    cd ..
     cd wavtokenizer_wNEAF
     ```
 
-5. Modify the adaptation training configuration
+6. Modify the adaptation training configuration
     - Configuration file path: `your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_focalse.yaml`
     - Replace all paths containing `shaokai` with your local absolute paths
     - Fill in the pre-trained weight path generated in Stage 1
     - Adjust denoising training parameters according to your needs
 
-6. Start noisy adaptation training
+7. Start noisy adaptation training
     ```bash
     python train.py fit --config your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_focalse.yaml
     ```
