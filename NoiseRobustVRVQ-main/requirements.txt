@@ -1,0 +1,17 @@
+argbind>=0.3.7
+descript-audiotools>=0.7.2
+einops
+numpy==1.26 
+tqdm
+numba>=0.5.7
+tensorboard
+# torchmetrics
+torchmetrics[audio]
+pandas
+
+########## mamba-ssm install troubleshooting
+####### Install in following order
+## python 3.12
+## conda install pytorch==2.2.2 torchvision==0.17.2 torchaudio==2.2.2 pytorch-cuda=12.1 -c pytorch -c nvidia
+## pip install mamba-ssm==1.2.0.post1 --no-build-isolation
+## pip install numpy==1.26
