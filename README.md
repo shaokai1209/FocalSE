@@ -212,18 +212,15 @@ This stage trains the HiFiCodec model on a clean speech dataset.
 
 1. Modify the training configuration
 
-```bash
-cd ..
-cd AcademiCodec-master/egs/HiFi-Codec-16k-320d
-```
-
     - Configuration file path: `./AcademiCodec-master/egs/HiFi-Codec-16k-320d/config_16k_320d.json`
     - Replace all paths containing `shaokai` with your local absolute paths
     - Adjust `start.sh` dataset paths, save directory, and other training parameters according to your needs
 
 2. Start pre-training
 
-    ```bash 
+    ```bash
+    cd ..
+    cd AcademiCodec-master/egs/HiFi-Codec-16k-320d
     bash start.sh
     ```
 
