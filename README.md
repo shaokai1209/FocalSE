@@ -1,5 +1,9 @@
 # A General Noisy Environment Adaptation Framework (NEAF) for Neural Speech Codecs (NSCs)
 
+## Note
+
+The publicly released code is an extended version of the work presented at INTERSPEECH 2026.
+
 ## 📢 News
 
 [June 4, 2026] - Our paper "Noisy Environment Adaptation of Neural Speech Codec via Focal Mask and Noise Feature Separation" has been **accepted** for **INTERSPEECH 2026**!
