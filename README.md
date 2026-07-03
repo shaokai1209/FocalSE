@@ -242,6 +242,10 @@ This stage fine-tunes the NEAF denoising method based on the pre-trained HiFiCod
 
 </details>
 
+## 🌈 Contact
+
+If you have any questions, please email the author (shaokai1209@gmail.com).
+
 ## 🔮 Acknowledgments
 
 We thank the authors for their excellent works:
