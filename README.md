@@ -1,6 +1,6 @@
 # A General Noisy Environment Adaptation Framework (NEAF) for Neural Speech Codecs (NSCs)
 
-## Note
+## 📝 Note
 
 The publicly released code is an extended version of the work presented at INTERSPEECH 2026.
 
