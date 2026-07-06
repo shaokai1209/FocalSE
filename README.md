@@ -2,7 +2,7 @@
 
 ## 📝 Note
 
-The publicly released code is an extended version of the work presented at INTERSPEECH 2026.
+The publicly released code is an extended version of the work accepted at INTERSPEECH 2026.
 
 ## 📢 News
 
