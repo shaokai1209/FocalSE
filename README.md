@@ -99,7 +99,11 @@ This stage fine-tunes the Focal-SE denoising module based on the pre-trained wei
     ```bash
     python train.py fit --config your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_focalse.yaml
     ```
-
+8. Resume
+    ```bash
+    python train.py fit --config your_path/.../wavtokenizer_wNEAF/configs/wavtokenizer_focalse.yaml  --ckpt_path your_path/.../wavtokenizer_wNEAF/../checkpoints/wavtokenizer_focalse_epoch=...ckpt
+    ```
+    
 #### Training Output
 
 Trained model checkpoints and training logs will be saved to the `save_dir` specified in the corresponding configuration file.
