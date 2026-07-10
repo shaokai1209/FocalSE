@@ -13,7 +13,7 @@ import soundfile as sf
 from tqdm import tqdm
 
 sys.path.insert(0, '/home/shaokai/NoiseRobustVRVQ-main')
-from model.focal_se_nr_module import FocalSpeechEnhancementModule
+from model.focal_se import FocalSpeechEnhancementModule
 
 from academicodec.models.hificodec.env import AttrDict
 from academicodec.models.hificodec.models import Encoder, Generator, Quantizer
