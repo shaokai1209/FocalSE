@@ -10,7 +10,7 @@ The publicly released code is an extended version of the work accepted at INTERS
 
 [June 6, 2026] - :wave: Hi, we’d like to invite you to listen to our <a href='https://shaokai1209.github.io/FocalSE/' target='_blank' style='text-decoration: none;'><img src='https://img.shields.io/badge/🎧_Audio_Demo-1DB954?style=flat' alt='Audio Demo' style='border-radius: 14px; padding: 8px 16px; background-color: #1DB954;'></a>.
 
-[June 11, 2026] - 🎉 Our preprint is now available on arXiv! 
+[July 11, 2026] - 🎉 Our preprint is now available on arXiv! 
 <a href='https://arxiv.org/abs/2607.04195' target='_blank' style='text-decoration: none;'>
   <img src='https://img.shields.io/badge/📄_arXiv-2607.04195-B31B1B?style=flat' alt='arXiv' 
        style='border-radius: 14px; padding: 8px 16px; background-color: #B31B1B;'>
